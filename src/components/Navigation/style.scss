@@ -1,0 +1,27 @@
+.navigation {
+  background-color: #eeeeee;
+
+  &__ul {
+    margin-left: 50px;
+  }
+
+  &__li {
+    display: inline-block;
+    list-style-type: none;
+  }
+
+  &__link {
+    display: block;
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 24px;
+
+    &:active {
+      color: #dd1111;
+    }
+
+    &.active {
+      color: #dd1111;
+    }
+  }
+}

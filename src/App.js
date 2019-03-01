@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import Home from './components/Home/Home';
+import Contacts from './components/Contacts/Contacts';
+import Users from './components/Users/Users';
+import PageNotFound from './components/PageNotFound/PageNotFound';
+import Navigation from './components/Navigation/Navigation';
+import './styles/reset.scss';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <BrowserRouter>
+        <div>
+          <Navigation />
+          <Switch>
+            <Route path={process.env.PUBLIC_URL + '/'} component={Home} exact />
+            <Route path={process.env.PUBLIC_URL + '/contacts'} component={Contacts} />
+            <Route path={process.env.PUBLIC_URL + '/users'} component={Users} />
+            <Route path={process.env.PUBLIC_URL + '/404'} component={PageNotFound} />
+            <Redirect to={process.env.PUBLIC_URL + '/404'} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }
