@@ -11,7 +11,7 @@ class Users extends Component {
     };
     this.showPersonsOptionList = this.showPersonsOptionList.bind(this);
     this.showSelectedPersonInfo = this.showSelectedPersonInfo.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.identifyKey = this.identifyKey.bind(this);
   }
 
@@ -30,8 +30,12 @@ class Users extends Component {
       });
   }
 
-  handleClick(e) {
-    fetch(e.target.dataset.url)
+  handleChange(e) {
+    const select = e.target;
+    const selectedOption = select.options[select.selectedIndex];
+    const optionUrl = this.state.allPersonsData.find(person => selectedOption.value === person.name).url;
+
+    fetch(optionUrl)
       .then(response => response.json())
       .then(data => this.setState({
         personData: data,
@@ -39,7 +43,7 @@ class Users extends Component {
   }
 
   showPersonsOptionList() {
-    return this.state.allPersonsData.map(person => <option key={this.identifyKey(person.url)} onClick={this.handleClick} value={person.name} data-url={person.url}>{person.name}</option>)
+    return this.state.allPersonsData.map(person => <option key={this.identifyKey(person.url)} value={person.name}>{person.name}</option>);
   }
 
   showSelectedPersonInfo() {
@@ -52,7 +56,7 @@ class Users extends Component {
         <span className="users__title">
           Choose character:
         </span>
-        <select className="users__select" size="5">
+        <select className="users__select" size="1" onChange={this.handleChange.bind(this)}>
           {this.showPersonsOptionList()}
         </select>
         {this.showSelectedPersonInfo()}
